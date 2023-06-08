@@ -1,4 +1,4 @@
-name: Build Release Android APK
+name: Build Release Android AP
 on:
   push:
     branches: [ "master" ]
