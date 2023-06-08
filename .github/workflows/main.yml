@@ -12,9 +12,16 @@ jobs:
     
       - name: "Checkout Code"
         uses: actions/checkout@v3
-
+      - name: "setup-node@v3"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18											  
+      - name: "Install Node Dependencies"
+        run: |
+          npm i						
       - name: "Build and Release"
         run: |
+          cd android	 
           chmod a+x gradlew
           ./gradlew build
           ./gradlew assembleRelease
@@ -24,11 +31,11 @@ jobs:
           KEY_ALIAS: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
-      - name: "upload artefact to App Center"
+      - name: "upload apk to App Center"
         uses: wzieba/AppCenter-Github-Action@v1
         with:
-          appName: "srinivasan-vthink.co.in/test"
+          appName: "jeyapriya@vthink.co.in/React-App"
           token: ${{secrets.APP_CENTER_TOKEN}}
-          file: ./app/build/outputs/apk/release/app-release.apk
+          file: ./android/app/build/outputs/apk/release/app-release.apk
           group: "tester" 
           notifyTesters: "true"
